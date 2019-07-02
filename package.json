@@ -1,0 +1,22 @@
+{
+  "name": "localtracker",
+  "version": "0.1.0",
+  "description": "Offline tracking of balloon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "John M. Larkin",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^5.0.6",
+    "electron-rebuild": "^1.8.5",
+    "electron-settings": "^3.2.0"
+  },
+  "dependencies": {
+    "@serialport/parser-readline": "^2.0.2",
+    "async": "^3.1.0",
+    "serialport": "^7.1.5"
+  }
+}
