@@ -1,0 +1,43 @@
+<div class="form-group">
+  <div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" value="" id="audioCheck">
+    <label class="custom-control-label" for="audioCheck">
+      Audio ping on balloon update
+    </label>
+  </div>
+</div>
+<div class="form-group">
+    <label for="trackingMode" class="control-label">Tracking mode</label>
+    <div>
+      <select class="form-control" id="trackingMode">
+        <option selected value="0">Off</option>
+        <option value="1">Ballon centered, manual zoom</option>
+        <option value="2">Car centered, manual zoom</option>
+        <option value="3">Balloon and car in bounds</option>
+      </select>
+  </div>
+<div class="form-group">
+  <label class="col-form-label" for="xbee-sn">XBee Modem SN</label>
+  <input type="text" class="form-control" id="xbee-sn">
+</div>
+<div class="form-group">
+    <label class="col-form-label" for="gps-sn">Local GPS SN</label>
+    <input type="text" class="form-control" id="gps-sn">
+</div>
+<hr>
+<div class="card">
+  <div class="card-body" id="downloadCard">
+    <h4 class="card-title text-white">Download maps for offline use</h4>
+    <div class="alert alert-dismissible alert-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h5>Warning!</h5>
+      <p>Downloaded maps allow you to transition from online to offline usage during a session. However, the app must still be started with Internet access.</p>
+    </div>
+    <ol>
+      <li>Set tracking mode to Off.</li>
+      <li>Adjust the map until the expected launch and landing locations are in bounds.</li>
+    </ol>
+    <button class="btn btn-primary" id="downloadBtn" onclick="downloadMaps()">Download</button>
+    <br>
+  </div>
+</div>

@@ -2,21 +2,26 @@
   "name": "localtracker",
   "version": "0.1.0",
   "description": "Offline tracking of balloon",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "rebuild": "./node_modules/.bin/electron-rebuild"
   },
   "author": "John M. Larkin",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^5.0.6",
+    "electron": "^4.2.6",
     "electron-rebuild": "^1.8.5",
     "electron-settings": "^3.2.0"
   },
   "dependencies": {
-    "@serialport/parser-readline": "^2.0.2",
+    "@serialport/bindings": "^2.0.8",
     "async": "^3.1.0",
-    "serialport": "^7.1.5"
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "serialport": "^7.1.5",
+    "xbee-api": "^0.6.0"
   }
 }

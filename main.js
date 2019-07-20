@@ -2,7 +2,10 @@ const path = require('path')
 const {app, BrowserWindow} = require('electron')
 const url = require('url')
 
-var mainWindow = null
+
+
+var mainWindow = null;
+app.disableDomainBlockingFor3DAPIs();
 
 function createWindow () {
   var windowOptions = {
@@ -14,7 +17,7 @@ function createWindow () {
 
   mainWindow = new BrowserWindow(windowOptions)
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '/index.html'),
+    pathname: path.join(__dirname, '/newIndex.html'),
     protocol: 'file:',
     slashes: true
   }))
