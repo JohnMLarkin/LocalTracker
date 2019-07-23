@@ -86,6 +86,11 @@ class XBee {
     document.getElementById('lngIndicator').innerHTML=`${wp.lng.toFixed(3)}\xB0`;
     document.getElementById('groundSpeedIndicator').innerHTML=`${wp.gndSpeed.toFixed(0)} km/h`;
     log.update(`Balloon GPS updated @ ${wp.t.toLocaleTimeString()}`);
+    altChart.data.datasets[0].data.push({
+      x: wp.t,
+      y: wp.alt
+    });
+    altChart.update();
     balloonWP.push(wp);
     balloonPoints.pushLatLngAlt(wp.lat, wp.lng, wp.alt);
     if (balloonPoints.getPointCount() == 2) {

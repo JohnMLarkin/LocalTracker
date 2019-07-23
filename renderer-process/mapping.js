@@ -14,6 +14,7 @@ var carPoints;
 var carPath;
 var carMarker;
 var carIcon;
+var pastAlt = [];
 var map;
 var defaultLayers;
 

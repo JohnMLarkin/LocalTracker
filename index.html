@@ -6,7 +6,6 @@
   width=device-width">
   <title>High Altitude Balloon Tracker</title>
 
-
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/bootstrap-slate.css">
   <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
@@ -17,24 +16,25 @@
   <script>let $ = require('jquery');</script>
   <script>require('popper.js');</script>
   <script>require('bootstrap');</script>
+  <script>require('chart.js');</script>
 
   <!-- HERE Maps JS -->
-  <script type="text/javascript" src="assets/js/mapsjs-core.js">
-  </script>
-  <script type="text/javascript" src="assets/js/mapsjs-service.js">
-  </script>
-  <script type="text/javascript" src="assets/js/mapsjs-ui.js">
-  </script>
-  <script type="text/javascript" src="assets/js/mapsjs-mapevents.js">
-  </script>
-  <!-- <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
   <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
   <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
-  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script> -->
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
 
-
+  <!-- Application JS (more at end of body) -->
   <script src="renderer-process/serial_comm.js"></script>
   <script src="renderer-process/controls.js"></script>
+
+  <script> 
+    $(function(){
+      $("#recents-content").load("sections/recents.html");
+      $("#about-content").load("sections/about.html");
+      $("#settings-content").load("sections/settings.html");
+    });
+  </script> 
 
   <!-- External resources -->
   <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" type="text/css">
@@ -62,103 +62,62 @@
 </head>
 
 <body>
-  <div class="container-fluid" style="padding: 0; margin: 0">
+  <div class="container-fluid" style="padding: 0; margin: 5px">
     <div class="row">
-      <div class="col-md-9">
-        <div id="map" style="width:100%; height: 90vh;"></div>
-      </div>
-      <div class="col-md-3" id="sidebar">
-        <ul class="nav nav-tabs" id="trackTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="update-tab" data-toggle="tab" href="#update" role="tab" aria-controls="update" aria-selected="true">Recent</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="false">Terminal</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="settings-tab" data-toggle="tab"
-                href="#settings" role="tab" aria-controls="settings"
-                aria-selected="false">Settings
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" id="updateTabContent">
-          <div class="tab-pane fade show active" id="update" role="tabpanel" aria-labelledby="update-tab">
-            <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #fff;">
-                Last Updated
-                <span class="text" id="lastUpdateIndicator"></span>
+      <nav class="col-1 sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav nav-pills flex-column" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" id="recents-tab" href="#recents" role="tab" aria-controls="recents" aria-selected="true">Recent</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" id="graphs-tab" href="#graphs" role="tab" aria-controls="graphs" aria-selected="false">Graphs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" id="log-tab" href="#log" role="tab" aria-controls="log" aria-selected="false">Log</a>
               </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #fff;">
-                Altitude
-                <span class="text" id="altitudeIndicator"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #fff;">
-                Vertical Velocity
-                <span class="text" id="verticalVelocityIndicator"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #fff;">
-                Latitude
-                <span class="text" id="latIndicator"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #fff;">
-                Longitude
-                <span class="text" id="lngIndicator"></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center" style="color: #fff;">
-                Ground Speed
-                <span class="text" id="groundSpeedIndicator"></span>
-              </li>
-            </ul>
-            <br>
-            <div class="headingGauge-container">
-              <canvas id="headingGauge"></canvas>
-            </div>
-            <div class="altChart-container">
-              <canvas id="altChart"></canvas>
-            </div>
-            <hr>
-            <!-- <div class="card text-white bg-secondary mb-3">
-              <div class="card-body form-horizontal">
-                <div class="row">
-                  <div class="card-text">Pan to: &nbsp;
-                    <button class="btn btn-primary btn-sm" onclick="panToBalloon()">balloon</button>
-                    &nbsp;
-                    <button class="btn btn-primary btn-sm" onclick="panToMe()">me</button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" id="settings-tab" href="#settings" role="tab" arial-controls="settings" aria-selected="false">Settings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" id="about-tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+            </li>
+          </ul>
+        </div>
+        <hr>
+      </nav>
+      <div class="col-3" id="content-bar">
+        <div class="tab-content" >
+          <div class="tab-pane active" id="recents" role="tabpanel" aria-labelledby="recents-tab">
+              <div id="recents-content"></div>
           </div>
-          <div class="tab-pane fade" id="console" role="tabpanel" aria-labelledby="console-tab">
-            <div class="card-text" id="modemConsole" style="background-color: #000000; color: #90CAF9; padding: 10px; height: 600px; width: auto; overflow: auto; font-size:75%"></div>
+          <div class="tab-pane" id="graphs" role="tabpanel" aria-labelledby="graphs-tab">
+            <div id="graphs-content" style="margin-top: 10px;">
+                <canvas id="altChart"></canvas>
+            </div>
           </div>
-          <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-            Settings will go here
+          <div class="tab-pane" id="log" role="tabpanel" aria-labelledby="log-tab">
+            <div class="card-text" id="modemConsole" style="background-color: #000000; color: #90CAF9; padding: 10px; height: 95vh; width: auto; overflow: auto; font-size:80%"></div>
+          </div>
+          <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+              <div id="settings-content"></div>
+          </div>
+          <div class="tab-pane" id="about" role="tabpanel" aria-labelledby="about-tab">
+              <div id="about-content"></div>
           </div>
         </div>
+      </div>
+      <div class="col-8">
+          <div id="map" style="width:100%; height: 95vh;"></div>
       </div>
     </div>
   </div>
-  <footer class="footer">
-    <div style="border-top: solid 1px #111; padding-top: 1em; margin-top: 1em">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 text-center">
-            <p class="text-muted">Local Tracker | &copy; Copyright 2019, John M. Larkin
-            <br><small class="text-muted">A component of the <a href="http://habosc.whitworthnearspace.org">High Altitude Balloon Open Source Collection</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+
+
 
   <script type="text/javascript" src="renderer-process/mapping.js"></script>
-
-  <script>
-    require('./helpers/imports')
-    require('./helpers/nav')
-    require('./helpers/subsection-btns')
-  </script> -->
+  <script async type="text/javascript" src="renderer-process/config.js"></script>
+  <script type="text/javascript" src="renderer-process/about.js"></script>
+  <script type="text/javascript" src="renderer-process/graphs.js"></script>
 </body>
 </html>
